@@ -33,11 +33,14 @@ public class GameLogic {
         field.doMove(st.isHaveBounds());
         gframe.repaintToNewField(field);
     }
-
-    public static void setupNewSettings(){
-        stop();
-        gframe.setEnabled(false);
-        SettingsFrame stf=new SettingsFrame();
+    
+    public static void setupNewSettings(Settings settings){
+        st=settings;
+        init();
+        gframe.setEnabled(true);
+    }
+    public static void goBack(){
+        gframe.setEnabled(true);
     }
 
     public static Settings getCurrentSettings(){

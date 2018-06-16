@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,31 +11,38 @@ public class GameFrame extends JFrame implements MouseListener {
 
     private static final String running="Running";
     private static final String notrunning="NotRunning";
+
+    private static final String onestep="One step";
+
+    private static final String settings="Settings";
+
+    private ActionListener onestepButtonListener= e -> {
+        if (!changeisrunningToggleButton.isSelected()) {
+            GameLogic.tick();
+        }
+    };
+    private ActionListener toggleButtonListener= e -> {
+
+        if (changeisrunningToggleButton.isSelected()) {
+            changeisrunningToggleButton.setText(running);
+            GameLogic.start();
+        }else{
+            changeisrunningToggleButton.setText(notrunning);
+            GameLogic.stop();
+        }
+
+    };
+
+    private ActionListener settingsButtonListener= e -> {
+        GameLogic.showSettingsWindow();
+    };
+
     public GameFrame(Settings st,Field paintedfield){
-
-        ActionListener onestepButtonListener= e -> {
-            if (!changeisrunningToggleButton.isSelected()) {
-
-                GameLogic.tick();
-
-            }
-        };
-        ActionListener toggleButtonListener= e -> {
-
-            if (changeisrunningToggleButton.isSelected()) {
-                changeisrunningToggleButton.setText(running);
-                GameLogic.start();
-            }else{
-                changeisrunningToggleButton.setText(notrunning);
-                GameLogic.stop();
-            }
-
-        };
 
         gpanel=new GamePanel(paintedfield);
         gpanel.setBounds(0,0,st.getSize()*GameLogic.CELLSIZEINPIXELS,st.getSize()*GameLogic.CELLSIZEINPIXELS);
 
-        onestepButton=new JButton("One step");
+        onestepButton=new JButton(onestep);
         onestepButton.setBounds(GameLogic.CELLSIZEINPIXELS,st.getSize()*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
         onestepButton.addActionListener(onestepButtonListener);
 
@@ -44,9 +50,9 @@ public class GameFrame extends JFrame implements MouseListener {
         changeisrunningToggleButton.setBounds(GameLogic.CELLSIZEINPIXELS*11,st.getSize()*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
         changeisrunningToggleButton.addActionListener(toggleButtonListener);
 
-        opensettingsButton=new JButton("Settings");
+        opensettingsButton=new JButton(settings);
         opensettingsButton.setBounds(GameLogic.CELLSIZEINPIXELS*22,st.getSize()*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
-
+        opensettingsButton.addActionListener(settingsButtonListener);
 
         setLayout(null);
 
