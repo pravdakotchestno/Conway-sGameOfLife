@@ -7,14 +7,12 @@ public class GameFrame extends JFrame implements MouseListener {
     private GamePanel gpanel;
     private JButton onestepButton;
     private JToggleButton changeisrunningToggleButton;
-    private JButton opensettingsButton;
+    
 
     private static final String running="Running";
     private static final String notrunning="NotRunning";
 
     private static final String onestep="One step";
-
-    private static final String settings="Settings";
 
     private ActionListener onestepButtonListener= e -> {
         if (!changeisrunningToggleButton.isSelected()) {
@@ -33,38 +31,27 @@ public class GameFrame extends JFrame implements MouseListener {
 
     };
 
-    private ActionListener settingsButtonListener= e -> {
-        GameLogic.showSettingsWindow();
-    };
-
-    public GameFrame(Settings st,Field paintedfield){
+    public GameFrame(Field paintedfield){
 
         gpanel=new GamePanel(paintedfield);
-        gpanel.setBounds(0,0,st.getSize()*GameLogic.CELLSIZEINPIXELS,st.getSize()*GameLogic.CELLSIZEINPIXELS);
+        gpanel.setBounds(0,0,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS);
 
         onestepButton=new JButton(onestep);
-        onestepButton.setBounds(GameLogic.CELLSIZEINPIXELS,st.getSize()*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
+        onestepButton.setBounds(GameLogic.CELLSIZEINPIXELS,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
         onestepButton.addActionListener(onestepButtonListener);
 
         changeisrunningToggleButton=new JToggleButton(notrunning);
-        changeisrunningToggleButton.setBounds(GameLogic.CELLSIZEINPIXELS*11,st.getSize()*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
+        changeisrunningToggleButton.setBounds(GameLogic.CELLSIZEINPIXELS*11,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
         changeisrunningToggleButton.addActionListener(toggleButtonListener);
 
-        opensettingsButton=new JButton(settings);
-        opensettingsButton.setBounds(GameLogic.CELLSIZEINPIXELS*22,st.getSize()*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
-        opensettingsButton.addActionListener(settingsButtonListener);
-
         setLayout(null);
-
-
 
         add(onestepButton);
         add(changeisrunningToggleButton);
         add(gpanel);
-        add(opensettingsButton);
         addMouseListener(this);
 
-        setSize(st.getSize()*GameLogic.CELLSIZEINPIXELS,st.getSize()*GameLogic.CELLSIZEINPIXELS+100);
+        setSize(GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS+100);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

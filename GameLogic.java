@@ -1,27 +1,24 @@
 public class GameLogic {
-    public static final int MINSIZE = 40;
-    public static final int MAXSIZE = calculateMaxSize();
-    public static final int MINDELAY = 100;
-    public static final int MAXDELAY = 10000;
+
+    public static final int SIZE = calculateSize();
     public static final int CELLSIZEINPIXELS = 10;
 
     private static MainGameThread gameThread;
     private static GameFrame gframe;
-    private static Settings st;
+    private static int delay;
     private static Field field;
 
     public static void init(){
 
-        st=new Settings();
+        delay=100;
         try {
-            field = new Field(st.getSize());
+            field = new Field(SIZE);
         }catch(Exception e){}
 
-        gframe=new GameFrame(st,field);
+        gframe=new GameFrame(field);
         gameThread=new MainGameThread();
         gameThread.start();
     }
-
     public static void stop(){
         gameThread.setRunning(false);
     }
@@ -30,21 +27,11 @@ public class GameLogic {
     }
 
     public static void tick(){
-        field.doMove(st.isHaveBounds());
+        field.doMove();
         gframe.repaintToNewField(field);
     }
-    
-    public static void setupNewSettings(Settings settings){
-        st=settings;
-        init();
-        gframe.setEnabled(true);
-    }
-    public static void goBack(){
-        gframe.setEnabled(true);
-    }
-
-    public static Settings getCurrentSettings(){
-        return st;
+    public static int getDelay(){
+        return delay;
     }
 
     public static GameFrame getGameFrame(){
@@ -55,8 +42,11 @@ public class GameLogic {
         return field;
     }
 
-    public static int calculateMaxSize(){
-        return 75;
+    public static int calculateSize(){
+        return 65;
         //TODO
+    }
+    public static void setupNewDelay(int del){
+        delay=del;
     }
 }

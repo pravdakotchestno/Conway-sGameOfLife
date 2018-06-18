@@ -5,23 +5,16 @@ public class Field {
     private boolean[][] field;
     private static final int[] CHECKS={-1, -1,   -1, 0,   -1, 1,   0, 1,   1, 1,   1, 0,   1, -1,   0, -1};
 
-    public Field(int size) throws Exception{
-
-
-        if(size<GameLogic.MINSIZE||size>GameLogic.MAXSIZE){
-            throw new Exception();
-        }else{
-            this.size=size;
-            field=new boolean[size][size];
-        }
+    public Field(int size){
+        this.size=size;
+        field=new boolean[size][size];
     }
-
-    public void doMove(boolean isHaveBounds){
+    public void doMove(){
 
         boolean[][] newfield= new boolean[size][size];
         for(int y=0;y<size;y++)for(int x=0;x<size;x++){
 
-            switch(getTrueCellsAround(x,y,isHaveBounds,field)){
+            switch(getTrueCellsAround(x,y,field)){
                 case 2: {
                     setCell(x,y,getCell(x,y,field),newfield);
                     break;
@@ -43,18 +36,14 @@ public class Field {
         field=newfield;
 
     }
-    private int getTrueCellsAround(int x, int y, boolean isHaveBounds, boolean[][] field){
+    private int getTrueCellsAround(int x, int y, boolean[][] field){
 
         int trueCellsAround=0;
 
         for(int k=0;k<8;k++){
-            if(isHaveBounds) {
-                if (x + CHECKS[k * 2 + 1] >= 0 && y + CHECKS[k * 2] >= 0 && x + CHECKS[k * 2 + 1] < this.size && y + CHECKS[k * 2] < this.size) {
-                    if (getCell(x + CHECKS[k * 2 + 1], y + CHECKS[k * 2], field)) trueCellsAround++;
-                }
-            }else{
-                if (getCell(rem((x + CHECKS[k * 2 + 1]),size), rem((y + CHECKS[k * 2]),size), field)) trueCellsAround++;
-            }
+
+            if (getCell(rem((x + CHECKS[k * 2 + 1]),size), rem((y + CHECKS[k * 2]),size), field)) trueCellsAround++;
+
 
         }
         return trueCellsAround;
