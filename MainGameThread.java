@@ -8,9 +8,9 @@ public class MainGameThread extends Thread{
     public void run() {
         super.run();
         while(true){
-            delay(GameLogic.getDelay());
+            delay(GameLogic.getDelay()/2);
             if(isRunning){
-                delay(GameLogic.getDelay());
+                delay(GameLogic.getDelay()/2);
                 GameLogic.tick();
             }
 

@@ -7,11 +7,12 @@ public class GameFrame extends JFrame implements MouseListener {
     private GamePanel gpanel;
     private JButton onestepButton;
     private JToggleButton changeisrunningToggleButton;
-    
+    private JTextField delayfield;
+    private JButton sumbitButton;
 
     private static final String running="Running";
     private static final String notrunning="NotRunning";
-
+    private static final String sumbit="Sumbit";
     private static final String onestep="One step";
 
     private ActionListener onestepButtonListener= e -> {
@@ -30,11 +31,19 @@ public class GameFrame extends JFrame implements MouseListener {
         }
 
     };
+    private ActionListener sumbitButtonListener= e -> {
+        validateInput();
+    };
 
     public GameFrame(Field paintedfield){
 
         gpanel=new GamePanel(paintedfield);
         gpanel.setBounds(0,0,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS);
+
+        delayfield=new JTextField(GameLogic.getDelay());
+        delayfield=new JTextField(GameLogic.getDelay()+"");
+        delayfield.setBounds(GameLogic.CELLSIZEINPIXELS,(GameLogic.SIZE+3)*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
+
 
         onestepButton=new JButton(onestep);
         onestepButton.setBounds(GameLogic.CELLSIZEINPIXELS,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
@@ -44,16 +53,22 @@ public class GameFrame extends JFrame implements MouseListener {
         changeisrunningToggleButton.setBounds(GameLogic.CELLSIZEINPIXELS*11,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
         changeisrunningToggleButton.addActionListener(toggleButtonListener);
 
+        sumbitButton=new JButton(sumbit);
+        sumbitButton.setBounds(GameLogic.CELLSIZEINPIXELS*11,(GameLogic.SIZE+3)*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
+        sumbitButton.addActionListener(sumbitButtonListener);
+
         setLayout(null);
 
         add(onestepButton);
         add(changeisrunningToggleButton);
         add(gpanel);
+        add(sumbitButton);
+        add(delayfield);
         addMouseListener(this);
 
         setSize(GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS+100);
         setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setVisible(true);
 
@@ -68,7 +83,11 @@ public class GameFrame extends JFrame implements MouseListener {
         setVisible(false);
         dispose();
     }
-
+    private void validateInput(){
+        try {
+            GameLogic.setNewDelay(Integer.parseInt(delayfield.getText()));
+        }catch(Exception e){}
+    }
 
 
     public void mouseClicked(MouseEvent e) {

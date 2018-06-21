@@ -1,7 +1,7 @@
 public class GameLogic {
 
-    public static final int SIZE = calculateSize();
-    public static final int CELLSIZEINPIXELS = 10;
+    public static final int SIZE = 80;
+    public static final int CELLSIZEINPIXELS = 8;
 
     private static MainGameThread gameThread;
     private static GameFrame gframe;
@@ -41,12 +41,7 @@ public class GameLogic {
     public static Field getField(){
         return field;
     }
-
-    public static int calculateSize(){
-        return 65;
-        //TODO
-    }
-    public static void setupNewDelay(int del){
+    public static void setNewDelay(int del){
         delay=del;
     }
 }
