@@ -2,6 +2,7 @@ public class GameLogic {
 
     public static final int SIZE = 80;
     public static final int CELLSIZEINPIXELS = 8;
+    public static final int MINDELAY = 10;
 
     private static MainGameThread gameThread;
     private static GameFrame gframe;
@@ -41,7 +42,9 @@ public class GameLogic {
     public static Field getField(){
         return field;
     }
-    public static void setNewDelay(int del){
-        delay=del;
+    public static void setDelay(int del){
+        if(del>=MINDELAY) {
+            delay = del;
+        }
     }
 }

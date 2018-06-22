@@ -33,6 +33,10 @@ public class Field {
         field=newfield;
 
     }
+
+    public void clean(){
+        this.field=new boolean[size][size];
+    }
     private int getTrueCellsAround(int x, int y, boolean[][] field){
 
         int trueCellsAround=0;
@@ -50,7 +54,7 @@ public class Field {
         if(x<this.size&&y<this.size&&x>=0&&y>=0)field[y][x]=!this.field[y][x];
 
     }
-    
+
     public void changeCell(int x,int y){
         changeCell(x,y,this.field);
     }

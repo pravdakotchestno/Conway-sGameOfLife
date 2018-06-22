@@ -9,18 +9,26 @@ public class GameFrame extends JFrame implements MouseListener {
     private static final String notrunning="NotRunning";
     private static final String sumbit="Sumbit";
     private static final String onestep="One step";
+    private static final String bomb="Bomb";
 
     private GamePanel gpanel;
     private JButton onestepButton;
     private JToggleButton changeisrunningToggleButton;
     private JTextField delayfield;
     private JButton sumbitButton;
+    private JButton bombButton;
 
     private ActionListener onestepButtonListener= e -> {
 
         if (!changeisrunningToggleButton.isSelected()) {
             GameLogic.tick();
         }
+
+    };
+
+    private ActionListener bombButtonListener= e -> {
+
+        GameLogic.getField().clean();
 
     };
 
@@ -38,7 +46,7 @@ public class GameFrame extends JFrame implements MouseListener {
     private ActionListener sumbitButtonListener= e -> {
 
         try {
-            GameLogic.setNewDelay(Integer.parseInt(delayfield.getText()));
+            GameLogic.setDelay(Integer.parseInt(delayfield.getText()));
         }catch(Exception ex){}
 
     };
@@ -65,7 +73,12 @@ public class GameFrame extends JFrame implements MouseListener {
         sumbitButton.setBounds(GameLogic.CELLSIZEINPIXELS*11,(GameLogic.SIZE+3)*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
         sumbitButton.addActionListener(sumbitButtonListener);
 
+        bombButton=new JButton(bomb);
+        bombButton.setBounds(GameLogic.CELLSIZEINPIXELS*22,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
+        bombButton.addActionListener(bombButtonListener);
+
         add(onestepButton);
+        add(bombButton);
         add(changeisrunningToggleButton);
         add(gpanel);
         add(sumbitButton);
