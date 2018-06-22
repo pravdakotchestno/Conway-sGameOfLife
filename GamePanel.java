@@ -12,6 +12,6 @@ public class GamePanel extends JPanel {
         repaint();
     }
     public void paintComponent(Graphics gr){
-        paintedfield.paint(gr);
+        paintedfield.draw(gr);
     }
 }

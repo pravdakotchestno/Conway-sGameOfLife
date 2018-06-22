@@ -9,6 +9,7 @@ public class Field {
         this.size=size;
         field=new boolean[size][size];
     }
+
     public void doMove(){
 
         boolean[][] newfield= new boolean[size][size];
@@ -21,16 +22,12 @@ public class Field {
                 }
                 case 3: {
                     setCell(x,y,true, newfield);
-
                     break;
                 }
                 default: {
                     setCell(x,y,false, newfield);
-
-                    break;
                 }
             }
-
         }
 
         field=newfield;
@@ -44,16 +41,16 @@ public class Field {
 
             if (getCell(rem((x + CHECKS[k * 2 + 1]),size), rem((y + CHECKS[k * 2]),size), field)) trueCellsAround++;
 
-
         }
         return trueCellsAround;
     }
 
     public void changeCell(int x,int y,boolean[][] field){
-        if(x<this.size&&y<this.size&&x>=0&&y>=0){
-            field[y][x]=!this.field[y][x];
-        }
+
+        if(x<this.size&&y<this.size&&x>=0&&y>=0)field[y][x]=!this.field[y][x];
+
     }
+    
     public void changeCell(int x,int y){
         changeCell(x,y,this.field);
     }
@@ -68,7 +65,7 @@ public class Field {
         return field[y][x];
     }
 
-    public void paint(Graphics gr){
+    public void draw(Graphics gr){
 
         int x=0;
         int y=0;
@@ -78,7 +75,7 @@ public class Field {
             for(boolean cell:array){
 
                 if(cell) {
-                    gr.setColor(Color.cyan);
+                    gr.setColor(Color.RED);
                 }else{
                     gr.setColor(Color.BLACK);
                 }

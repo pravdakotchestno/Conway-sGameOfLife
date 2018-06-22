@@ -4,22 +4,26 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class GameFrame extends JFrame implements MouseListener {
-    private GamePanel gpanel;
-    private JButton onestepButton;
-    private JToggleButton changeisrunningToggleButton;
-    private JTextField delayfield;
-    private JButton sumbitButton;
 
     private static final String running="Running";
     private static final String notrunning="NotRunning";
     private static final String sumbit="Sumbit";
     private static final String onestep="One step";
 
+    private GamePanel gpanel;
+    private JButton onestepButton;
+    private JToggleButton changeisrunningToggleButton;
+    private JTextField delayfield;
+    private JButton sumbitButton;
+
     private ActionListener onestepButtonListener= e -> {
+
         if (!changeisrunningToggleButton.isSelected()) {
             GameLogic.tick();
         }
+
     };
+
     private ActionListener toggleButtonListener= e -> {
 
         if (changeisrunningToggleButton.isSelected()) {
@@ -32,7 +36,11 @@ public class GameFrame extends JFrame implements MouseListener {
 
     };
     private ActionListener sumbitButtonListener= e -> {
-        validateInput();
+
+        try {
+            GameLogic.setNewDelay(Integer.parseInt(delayfield.getText()));
+        }catch(Exception ex){}
+
     };
 
     public GameFrame(Field paintedfield){
@@ -57,8 +65,6 @@ public class GameFrame extends JFrame implements MouseListener {
         sumbitButton.setBounds(GameLogic.CELLSIZEINPIXELS*11,(GameLogic.SIZE+3)*GameLogic.CELLSIZEINPIXELS+10,GameLogic.CELLSIZEINPIXELS*10,GameLogic.CELLSIZEINPIXELS*2);
         sumbitButton.addActionListener(sumbitButtonListener);
 
-        setLayout(null);
-
         add(onestepButton);
         add(changeisrunningToggleButton);
         add(gpanel);
@@ -66,29 +72,16 @@ public class GameFrame extends JFrame implements MouseListener {
         add(delayfield);
         addMouseListener(this);
 
+        setLayout(null);
         setSize(GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS,GameLogic.SIZE*GameLogic.CELLSIZEINPIXELS+100);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         setVisible(true);
-
-
 
     }
     public void repaintToNewField(Field field){
         gpanel.repaintToNewField(field);
     }
-
-    public void destroy(){
-        setVisible(false);
-        dispose();
-    }
-    private void validateInput(){
-        try {
-            GameLogic.setNewDelay(Integer.parseInt(delayfield.getText()));
-        }catch(Exception e){}
-    }
-
 
     public void mouseClicked(MouseEvent e) {
         GameLogic.getField().changeCell(e.getX()/GameLogic.CELLSIZEINPIXELS,(e.getY()-23)/GameLogic.CELLSIZEINPIXELS);

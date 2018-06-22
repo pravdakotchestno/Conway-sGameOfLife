@@ -1,10 +1,6 @@
 public class MainGameThread extends Thread{
     private boolean isRunning=false;
 
-    public boolean isRunning() {
-        return isRunning;
-    }
-
     public void run() {
         super.run();
         while(true){
